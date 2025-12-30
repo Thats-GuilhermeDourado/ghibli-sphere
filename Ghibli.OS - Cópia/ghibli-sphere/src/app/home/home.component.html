@@ -1,0 +1,119 @@
+<nav class="main-nav">
+  <div class="nav-left">
+    <a href="#" class="nav-link active">Home</a>
+    <a href="#" class="nav-link">Movies</a>
+    <a href="#" class="nav-link">TV Shows</a>
+    <a href="#" class="nav-link">My Library</a>
+  </div>
+
+  <div class="nav-right">
+    <div class="search-wrapper">
+      <input type="text" class="search-bar" placeholder="Search">
+      <i class="bi bi-search search-icon"></i>
+    </div>
+    
+    <div class="user-avatar" (click)="openAvatarModal()">
+  <img [src]="userService.currentAvatar()" alt="User">
+</div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-container">
+  <div class="hero-bg" [style.backgroundImage]="'url(' + activeMovie().heroImage + ')'"></div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <div class="tags-container">
+      @for (genre of activeMovie().genres; track genre) {
+        <span class="tag-glass">{{ genre }}</span>
+      }
+    </div>
+
+    <img [src]="activeMovie().logoUrl" class="movie-logo" [alt]="activeMovie().title + ' logo'">
+    
+    <div class="meta-info">
+      <span class="match">{{ activeMovie().matchScore }}% Match</span>
+      <span class="year">{{ activeMovie().year }}</span>
+      <span class="duration" *ngIf="activeMovie().duration">{{ activeMovie().duration }}</span>
+      <span class="rating" *ngIf="activeMovie().rating">{{ activeMovie().rating }}</span>
+    </div>
+
+    <p class="description">
+      {{ activeMovie().description }}
+    </p>
+
+    <div class="actions">
+      <button class="btn-play-glass">
+        <i class="bi bi-play-fill"></i> play now
+      </button>
+      <button class="btn-wishlist-simple">
+        <i class="bi bi-heart"></i>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Movie Row Section -->
+<section class="movie-row">
+  <h3>Filmes do Studio Ghibli</h3>
+  
+  <swiper-container 
+    slides-per-view="6.2" 
+    space-between="15" 
+    free-mode="true" 
+    grab-cursor="true"
+    mousewheel-force-to-axis="true"
+    class="ghibli-carousel">
+    
+    @for (movie of movies(); track movie.title) {
+      <swiper-slide>
+        <div class="movie-card" 
+             [class.active]="isActiveMovie(movie)"
+             (click)="selectMovie(movie)">
+          
+          <div class="card-image-container">
+            <img [src]="movie.thumbnail || movie.heroImage" [alt]="movie.title">
+          </div>
+          
+          <!-- Card Overlay CORRIGIDO -->
+          <div class="card-overlay">
+            <i class="bi bi-play-circle"></i>
+          </div>
+          
+          <!-- Badge e Progress Indicator -->
+          @if (isActiveMovie(movie)) {
+            <div class="now-playing-badge">
+              <i class="bi bi-play-fill"></i>
+              NOW PLAYING
+            </div>
+            
+            <div class="progress-indicator"></div>
+          }
+        </div>
+      </swiper-slide>
+    }
+  </swiper-container>
+</section>
+
+<!-- MODAL FORA DA SECTION (CORRIGIDO) -->
+@if (isAvatarModalOpen()) {
+  <div class="modal-overlay" (click)="closeModal()">
+    <div class="avatar-modal" (click)="$event.stopPropagation()">
+      <h2>Choose your avatar</h2>
+      
+      <div class="avatar-grid">
+        @for (avatar of availableAvatars; track avatar) {
+          <div 
+            class="avatar-item" 
+            [class.active]="selectedAvatar() === avatar"
+            (click)="selectAvatar(avatar)">
+            <img [src]="avatar" alt="Avatar Option">
+          </div>
+        }
+      </div>
+
+      <button class="btn-select" (click)="confirmSelection()">Select</button>
+    </div>
+  </div>
+}

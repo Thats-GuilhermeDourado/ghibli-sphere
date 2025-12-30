@@ -1,0 +1,33 @@
+<section class="hero-container">
+  <div class="hero-bg" [style.backgroundImage]="'url(' + activeMovie().heroImage + ')'"></div>
+  
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <div class="tags">
+      @for (genre of activeMovie().genres; track genre) {
+        <span class="tag">{{ genre }}</span>
+      }
+    </div>
+
+    <img [src]="activeMovie().logoUrl" class="movie-logo" alt="Movie Title">
+    
+    <div class="meta-info">
+      <span class="match">{{ activeMovie().matchScore }}% Match</span>
+      <span class="year">{{ activeMovie().year }}</span>
+    </div>
+
+    <div class="actions">
+      <button class="btn-play">
+        <span class="icon">▶</span> Play now
+      </button>
+      <button class="btn-wishlist">
+        <i class="heart-icon">♡</i>
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="movie-list">
+  <h3>Movies</h3>
+  </section>

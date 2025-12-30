@@ -1,0 +1,20 @@
+// Cores inspiradas na Opção A
+$bg-dark: #0e1116;
+$bg-surface: #1a1d23;
+$accent-blue: #00e5ff;
+$text-main: #ffffff;
+$text-muted: rgba(255, 255, 255, 0.7);
+
+// Transições padrão para fluidez
+$transition-smooth: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+
+// Gradiente icônico do Disney+ (Overlay para o Hero)
+$hero-gradient: linear-gradient(
+  to right, 
+  #0e1116 10%, 
+  transparent 50%
+), linear-gradient(
+  to top,
+  #0e1116 5%,
+  transparent 30%
+);
