@@ -1,33 +1,115 @@
+<nav class="main-nav">
+  <div class="nav-left">
+    <a href="#" class="nav-link active">Home</a>
+    <a href="#" class="nav-link">Movies</a>
+    <a href="#" class="nav-link">TV Shows</a>
+    <a href="#" class="nav-link">My Library</a>
+  </div>
+
+  <div class="nav-right">
+    <div class="search-wrapper">
+      <input type="text" class="search-bar" placeholder="Search">
+      <i class="bi bi-search search-icon"></i>
+    </div>
+    
+    <div class="user-avatar" (click)="openAvatarModal()">
+      <img [src]="userService.currentAvatar()" alt="User">
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
 <section class="hero-container">
   <div class="hero-bg" [style.backgroundImage]="'url(' + activeMovie().heroImage + ')'"></div>
-  
   <div class="hero-overlay"></div>
 
   <div class="hero-content">
-    <div class="tags">
+    <div class="tags-container">
       @for (genre of activeMovie().genres; track genre) {
-        <span class="tag">{{ genre }}</span>
+        <span class="tag-glass">{{ genre }}</span>
       }
     </div>
 
-    <img [src]="activeMovie().logoUrl" class="movie-logo" alt="Movie Title">
+    <img [src]="activeMovie().logoUrl" class="movie-logo" [alt]="activeMovie().title + ' logo'">
     
     <div class="meta-info">
       <span class="match">{{ activeMovie().matchScore }}% Match</span>
       <span class="year">{{ activeMovie().year }}</span>
+      <span class="duration" *ngIf="activeMovie().duration">{{ activeMovie().duration }}</span>
+      <span class="rating" *ngIf="activeMovie().rating">{{ activeMovie().rating }}</span>
     </div>
 
+    <p class="description">
+      {{ activeMovie().description }}
+    </p>
+
     <div class="actions">
-      <button class="btn-play">
-        <span class="icon">▶</span> Play now
+      <button class="btn-play-glass">
+        <i class="bi bi-play-fill"></i> play now
       </button>
-      <button class="btn-wishlist">
-        <i class="heart-icon">♡</i>
+      <button class="btn-wishlist-simple">
+        <i class="bi bi-heart"></i>
       </button>
     </div>
   </div>
 </section>
 
-<section class="movie-list">
-  <h3>Movies</h3>
-  </section>
+<section class="flexcards-section">
+  <h2 class="section-title">Studio Ghibli Collection</h2>
+  
+  <div class="flexcards-container">
+    @for (movie of movies(); track movie.title; let i = $index) {
+      <div 
+        class="flexcard" 
+        [class.active]="isActiveMovie(movie)"
+        (click)="selectMovie(movie)"
+        [style.--cardBackground]="'url(' + movie.cardImage + ')'">
+        
+        <div class="card-glow"></div>
+        <div class="card-shadow"></div>
+        
+        <div class="card-content">
+          <div class="card-label">
+            <div class="card-icon">
+              <i [class]="isActiveMovie(movie) ? 'bi bi-play-fill' : 'bi bi-film'"></i>
+            </div>
+            
+            <div class="card-info">
+              <span class="card-category">Ghibli Classic</span>
+              <div class="card-title">{{ movie.title }}</div>
+              <div class="card-subtitle">
+                
+              </div>
+            </div>
+          </div>
+        </div>
+
+        @if (isActiveMovie(movie)) {
+          
+        }
+      </div>
+    }
+  </div>
+</section>
+
+<!-- MODAL (mantido igual) -->
+@if (isAvatarModalOpen()) {
+  <div class="modal-overlay" (click)="closeModal()">
+    <div class="avatar-modal" (click)="$event.stopPropagation()">
+      <h2>Choose your avatar</h2>
+      
+      <div class="avatar-grid">
+        @for (avatar of availableAvatars; track avatar) {
+          <div 
+            class="avatar-item" 
+            [class.active]="selectedAvatar() === avatar"
+            (click)="selectAvatar(avatar)">
+            <img [src]="avatar" alt="Avatar Option">
+          </div>
+        }
+      </div>
+
+      <button class="btn-select" (click)="confirmSelection()">Select</button>
+    </div>
+  </div>
+}
