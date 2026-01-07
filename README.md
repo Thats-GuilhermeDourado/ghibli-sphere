@@ -21,6 +21,14 @@ GhibliSphere is a modern, immersive streaming platform concept inspired by the w
 <img width="1919" height="894" alt="image" src="https://github.com/user-attachments/assets/7fd1472b-b540-4971-9ab3-acfa03b10a20" />
 
 
+## FlexCards Update
+
+## Overview
+This update transforms the traditional movie cards into a *interactive flexcard system** with cinematic animations and fluid interactions.
+
+<img width="1909" height="856" alt="image" src="https://github.com/user-attachments/assets/c2f3bd7e-3822-40b0-a928-15bdd63ec0e0" />
+
+
 ## Technologies Used
 
 This project leverages the latest advancements in web development:
